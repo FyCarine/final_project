@@ -164,5 +164,19 @@ LEFT JOIN emprunt_emprunt e ON
 o.id_objet=e.id_objet AND 
 e.date_retour >= CURDATE();
 
+CREATE OR REPLACE VIEW v_emprunt_object AS
+SELECT em.nom AS emprunteur,
+                em.ville,
+                em.email,
+                eo.nom_objet,
+                eco.nom_categorie,
+                ee.date_emprunt,
+                ee.date_retour,
+                eio.nom_image
+            FROM emprunt_emprunt ee
+            JOIN emprunt_objet eo ON ee.id_objet = eo.id_objet
+            JOIN emprunt_categorie_objet eco ON eo.id_categorie = eco.id_categorie
+            JOIN emprunt_membre em ON ee.id_membre = em.id_membre
+            LEFT JOIN emprunt_image_objet eio ON eo.id_objet = eio.id_objet; 
 
 ORDER BY c.nom_categorie, o.id_objet;
