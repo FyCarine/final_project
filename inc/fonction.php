@@ -64,8 +64,8 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
     function filtrer($categorie) {
         $connexion = dbconnect();
         $sql = "SELECT * FROM v_emprunt_getobject v 
-        ORDER BY v.nom_categorie, v.id_objet
-        WHERE v.nom_categorie = $categorie";
+        WHERE v.nom_categorie = '$categorie'
+        ORDER BY v.nom_categorie, v.id_objet";
 
         $result = mysqli_query($connexion, $sql);
         $res = array();

@@ -1,8 +1,14 @@
 <?php 
 require('../inc/fonction.php');
-$objets = get_object();
+if (isset($_GET['categorie'])) {
+    $categorie = $_GET['categorie'];
+    $objets = filtrer($categorie);
+} else {
+    $objets = get_object(); 
+}
+
 $categorie_actuelle = "";
-$compteur = 0; 
+$compteur = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +27,19 @@ $compteur = 0;
 </header>
 
 <main class="container">
+<form method="GET" action="home.php" class="my-4">
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="categorie">Catégorie</label>
+        <select name="categorie" id="categorie" class="form-select">
+            <option value="">-- Toutes --</option>
+            <option value="esthetique">Esthetique</option>
+            <option value="bricolage">Bricolage</option>
+            <option value="mecanique">Mecanique</option>
+            <option value="cuisine">Cuisine</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrer</button>
+    </div>
+</form>
 <?php
 foreach($objets as $objet){
     if ($categorie_actuelle != $objet['nom_categorie']){
