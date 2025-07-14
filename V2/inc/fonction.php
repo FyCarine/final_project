@@ -3,7 +3,7 @@ function dbconnect() {
     static $connect = null;
 
     if ($connect === null) {
-        $connect = mysqli_connect('localhost', 'root', '', 'emprunt');
+        $connect = mysqli_connect('localhost', 'root', '', 'exam');
         if (!$connect) {
             die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
         }
@@ -103,4 +103,61 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
         }
         return $res;
     }
+        function get_one_objet($id,$categorie) {
+        $connexion = dbconnect();
+        $sql = "SELECT*FROM v_emprunt_getobject v
+        WHERE v.id_objet='%s' AND v.id_categorie='%s'";
+        $sql = sprintf($sql, $id,$categorie);
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+            $res[] = $data;
+        }
+        return $res;
+    }
+
+    function get_historique_objet($id_objet, $id_categorie) {
+    $connexion = dbconnect();
+
+    $sql = "SELECT * FROM v_emprunt_object 
+            WHERE id_objet = '$id_objet'
+            AND id_categorie = '$id_categorie'
+            ORDER BY date_emprunt ASC";
+
+    $result = mysqli_query($connexion, $sql);
+    $res = array();
+    while ($data = mysqli_fetch_assoc($result)) {
+        $res[] = $data;
+    }
+
+    return $res;
+}
+function get_images_objet($id_objet) {
+    $connexion = dbconnect();
+    $sql = "SELECT nom_image FROM emprunt_image_objet WHERE id_objet = $id_objet";
+    $result = mysqli_query($connexion, $sql);
+    $res = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $res[] = $row;
+    }
+    return $res;
+}
+
+function get_user_objects() {
+    $user = get_user_byemail($_SESSION["email"]);
+    $idmembre = $user["id_membre"];  
+
+    $sql = "SELECT o.*, c.nom_categorie, i.nom_image
+            FROM emprunt_objet o
+            JOIN emprunt_categorie_objet c ON o.id_categorie = c.id_categorie
+            LEFT JOIN emprunt_image_objet i ON o.id_objet = i.id_objet
+            WHERE o.id_membre = $idmembre
+            ORDER BY o.id_objet DESC";
+
+    $result = mysqli_query(dbconnect(), $sql);
+    $objects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $objects;
+}
+
+
 ?>
