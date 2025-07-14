@@ -89,7 +89,7 @@ foreach($objets as $objet){
                 <h6 class="card-title text-center mb-0"><?= $objet['nom_objet'] ?></h6>
                 
             </div>
-            <a class="btn btn-primary" href="emprunt.php?id=<?=$objet['id_objet']?>">Emprunter</a>
+            <a class="btn btn-primary" href="emprunt.php?id=<?=$objet['id_objet']?>&cat=<?=$objet['id_categorie']?>">Emprunter</a>
         </div>
     </div>
 
