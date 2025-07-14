@@ -84,11 +84,12 @@ foreach($objets as $objet){
     <div class="col-md-2 mb-4">
         <div class="card h-100">
         <a href="../pages/fiche.php?obj=<?=$objet['id_objet']?>&cat=<?=$objet['id_categorie']?>">
-
-            <img src="../assets/images/<?= $objet['nom_image'] ?>" alt="<?= $objet['nom_objet']?>" class="card-img-top" style="height:150px; object-fit:cover;">
-</a>            <div class="card-body p-2">
+            <img src="../assets/images/<?= $objet['nom_image'] ?>" alt="<?= $objet['nom_objet']?>" class="card-img-top" style="height:150px; object-fit:cover;"></a>
+            <div class="card-body p-2">
                 <h6 class="card-title text-center mb-0"><?= $objet['nom_objet'] ?></h6>
+                
             </div>
+            <a class="btn btn-primary" href="emprunt.php?id=<?=$objet['id_objet']?>">Emprunter</a>
         </div>
     </div>
 

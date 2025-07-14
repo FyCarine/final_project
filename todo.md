@@ -21,6 +21,11 @@ traitement_login.php
         - to log() : verifier si la personne est dans la base
     - integration : 
         - si la fonction est vraie, redirection vers accueil
+    
+home.php :
+    - liste objets
+    - bouton emprunter
+    - 
 
 fonction.php
     -dbconnect();

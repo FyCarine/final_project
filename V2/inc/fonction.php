@@ -81,17 +81,32 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
         return $res;
     }
 
-    function add_pub($nomimage,$extension, $categorie){
+    function add_pub($titre, $categorie, $images){
         $connexion = dbconnect();
         $mail = $_SESSION['email'];
         $moi = get_loged_membre($mail);
-        $IDmembres1 = $moi['IdMembre'];
-
-        $sql = " ";
-        $sql = sprintf($sql,$IDmembres1,$nomimage,$extension, $categorie);
-        echo $sql;
-        mysqli_query($connexion, $sql);
+        $IDmembre = $moi['IdMembre'];
+    
+        $sql_objet = "INSERT INTO emprunt_objet (nom_objet, id_categorie, id_membre)
+                      VALUES ('$titre', $categorie, $IDmembre)";
+        mysqli_query($connexion, $sql_objet);
+    
+        $id_objet = mysqli_insert_id($connexion);
+    
+        if (count($images['name']) == 1 
+        && $images['name'][0] === 'default.jpg') {
+            $sql_img = "INSERT INTO emprunt_image_objet (id_objet, nom_image)
+                        VALUES ($id_objet, 'default.jpg')";
+            mysqli_query($connexion, $sql_img);
+        } else {
+            foreach ($images['name'] as $nom_image) {
+                $sql_img = "INSERT INTO emprunt_image_objet (id_objet, nom_image)
+                            VALUES ($id_objet, '$nom_image')";
+                mysqli_query($connexion, $sql_img);
+            }
+        }
     }
+    
     function get_categories(){
         $connexion = dbconnect();
         $sql = "SELECT DISTINCT id_categorie, nom_categorie FROM emprunt_categorie_objet";
@@ -118,9 +133,9 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
     function get_historique_objet($id_objet, $id_categorie) {
     $connexion = dbconnect();
 
-    $sql = "SELECT * FROM v_emprunt_object v
-            WHERE v.id_objet = '$id_objet'
-            AND v.id_categorie = '$id_categorie'
+    $sql = "SELECT * FROM v_emprunt_object 
+            WHERE id_objet = '$id_objet'
+            AND id_categorie = '$id_categorie'
             ORDER BY v.date_emprunt ASC";
 
     $result = mysqli_query($connexion, $sql);
@@ -156,6 +171,24 @@ function get_user_objects() {
     $result = mysqli_query(dbconnect(), $sql);
     $objects = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $objects;
+}
+
+
+function get_emprunt_en_cours($id_objet,$id_categorie){
+    $connexion = dbconnect();
+
+    $sql = "SELECT ee.date_retour
+            FROM emprunt_emprunt ee
+            JOIN emprunt_objet o ON o.id_objet = ee.id_objet
+            JOIN emprunt_membre em ON em.id_membre = ee.id_membre
+            WHERE date_retour >= CURDATE() AND ee.id_objet = '$id_objet' AND ee.id_categorie='$id_categorie'";
+    $result = mysqli_query($connexion, $sql);
+}
+
+function emprunter(){
+    $user = get_loged_membre($_SESSION["email"]);
+    $connexion = dbconnect();
+    $sql = "SELECT ";
 }
 
 
