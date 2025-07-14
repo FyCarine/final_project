@@ -3,7 +3,7 @@ function dbconnect() {
     static $connect = null;
 
     if ($connect === null) {
-        $connect = mysqli_connect('172.60.0.15', 'ETU002804', 'VPjI8oit', 'db_s2_ETU002804');
+        $connect = mysqli_connect('localhost', 'root', '', 'emprunt');
         if (!$connect) {
             die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
         }
@@ -23,8 +23,14 @@ function dbconnect() {
 
     return mysqli_num_rows($result);
 }
-
-function verify_inscription($email){
+    function get_loged_membre($email){
+    $sql = "SELECT * FROM emprunt_membre WHERE email = '%s'";
+    $sql = sprintf($sql, $email);
+    $result = mysqli_query(dbconnect(), $sql);
+    $donnee = mysqli_fetch_assoc($result);
+    return $donnee;
+}
+    function verify_inscription($email){
     $sql = "SELECT * FROM emprunt_membre WHERE email = '%s'";
     $sql = sprintf($sql, $email);
     $result = mysqli_query(dbconnect(), $sql);
@@ -32,7 +38,7 @@ function verify_inscription($email){
     return mysqli_num_rows($result);
 }
 
-function verify_password($mdp, $mdpbis){
+    function verify_password($mdp, $mdpbis){
     if($mdp == $mdpbis){
         return true;
     }
@@ -71,6 +77,29 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
         $res = array();
         while ($data = mysqli_fetch_assoc($result)) {
         $res[] = $data;
+        }
+        return $res;
+    }
+
+    function add_pub($titre, $nomimage,$extension, $categorie){
+        $connexion = dbconnect();
+        $mail = $_SESSION['email'];
+        $moi = get_loged_membre($mail);
+        $IDmembres1 = $moi['IdMembre'];
+
+        $sql = " ";
+        $sql = sprintf($sql, $titre, $nomimage, $IDmembres1 ,$extension, $categorie);
+        echo $sql;
+        mysqli_query($connexion, $sql);
+
+    }
+    function get_categories(){
+        $connexion = dbconnect();
+        $sql = "SELECT DISTINCT id_categorie, nom_categorie FROM emprunt_categorie_objet";
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while($data = mysqli_fetch_assoc($result)){
+            $res[] = $data;
         }
         return $res;
     }

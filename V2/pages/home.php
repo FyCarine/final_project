@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require('../inc/fonction.php');
 if (isset($_GET['categorie'])) {
     $categorie = $_GET['categorie'];
@@ -6,6 +7,8 @@ if (isset($_GET['categorie'])) {
 } else {
     $objets = get_object(); 
 }
+$email = $_SESSION['email'];
+$membre = get_loged_membre($email);
 
 $categorie_actuelle = "";
 $compteur = 0;
@@ -22,8 +25,29 @@ $compteur = 0;
     <title>Document</title>
 </head>
 <body>
+<header>
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.php">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="../inc/logout.php">Deconnexion</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
 <header class="container my-4">
-    <h1 class="text-center">Liste des objets</h1>
+    <h2 class="text-center">Bienvenue, <?php echo $membre['nom'] ?> !</h2> <br><br>
+    <h4 class="text-center">Liste des objets</h4>
 </header>
 
 <main class="container">
@@ -40,6 +64,9 @@ $compteur = 0;
         <button type="submit" class="btn btn-primary">Filtrer</button>
     </div>
 </form>
+<p>
+    <a class="btn btn-primary" href="addimage.php" role="button">Add new object</a>
+</p>
 <?php
 foreach($objets as $objet){
     if ($categorie_actuelle != $objet['nom_categorie']){
@@ -56,7 +83,7 @@ foreach($objets as $objet){
 
     <div class="col-md-2 mb-4">
         <div class="card h-100">
-            <img src="../images/<?= $objet['nom_image'] ?>" alt="<?= $objet['nom_objet']?>" class="card-img-top" style="height:150px; object-fit:cover;">
+            <img src="../assets/images/<?= $objet['nom_image'] ?>" alt="<?= $objet['nom_objet']?>" class="card-img-top" style="height:150px; object-fit:cover;">
             <div class="card-body p-2">
                 <h6 class="card-title text-center mb-0"><?= $objet['nom_objet'] ?></h6>
             </div>
