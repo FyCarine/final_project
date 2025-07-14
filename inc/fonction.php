@@ -60,4 +60,18 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
         }
         return $res;
     }
+
+    function filtrer($categorie) {
+        $connexion = dbconnect();
+        $sql = "SELECT * FROM v_emprunt_getobject v 
+        ORDER BY v.nom_categorie, v.id_objet
+        WHERE v.nom_categorie = $categorie";
+
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+        $res[] = $data;
+        }
+        return $res;
+    }
 ?>
