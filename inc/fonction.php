@@ -47,4 +47,17 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
     $sql = sprintf($sql, $nom, $dtn, $genre, $email, $ville, $mdp);
     mysqli_query(dbconnect(), $sql);
 }
+
+    function get_object(){
+        $connexion = dbconnect();
+        $sql = "SELECT * FROM v_emprunt_getobject v 
+        ORDER BY v.nom_categorie, v.id_objet";
+
+        $result = mysqli_query($connexion, $sql);
+        $res = array();
+        while ($data = mysqli_fetch_assoc($result)) {
+        $res[] = $data;
+        }
+        return $res;
+    }
 ?>
