@@ -1,0 +1,18 @@
+a{
+    text-decoration: none;
+}
+.cont{
+    width: 30%;
+    margin-top: 50px;
+
+}
+.name{
+    text-align: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.birth{
+    text-align: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
