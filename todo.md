@@ -6,11 +6,16 @@ base de donnée
     - 
 
 index.php
--affichage
--base
--fonction
--integartion
+    -affichage:
+        - creation d'un formulaire de login
+        - lien vers inscription si pas de compte
+    -base
+
+    -fonction
+
+    -integration
+
 
 fonction.php
     -dbconnect();
-    
+
