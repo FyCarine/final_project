@@ -11,11 +11,18 @@ index.php
         - lien vers inscription si pas de compte
     -base
 
-    -fonction
+    -integration:
+        - lors de la connexion, rediriger vers traitement_login
 
-    -integration
-
+traitement_login.php
+    -base :
+        -
+    -fonction :
+        - to log() : verifier si la personne est dans la base
+    - integration : 
+        - si la fonction est vraie, redirection vers accueil
 
 fonction.php
     -dbconnect();
-
+    -to_log();
+    -add_new_member();

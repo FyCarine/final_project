@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -28,13 +30,17 @@
 </header>
     
     <main>
+    <div class="container-sm cont">
     <form action="../traitement/traitement_inscription.php" method="post">
                     <p>Nom : <input type="text" name="nom"></p>
-                    <p>Date de naissance : <input type="date" name="ddns"></p>
+                    <p>Date de naissance : <input type="date" name="dtn"></p>
+                    <p>Genre: <input type="text" name="genre"></p>
+
                     <?php if(isset($_GET['error'])) { ?>
                         <p class="error">Votre email a déjà été utilisé</p>
                     <?php } ?>
                     <p>Email : <input type="text" name="email"></p>
+                    <p>ville: <input type="text" name="ville"></p>
                     <p>Mot de passe : <input type="password" name="mdp"></p>
                     <?php if(isset($_GET['errormdp'])) { ?>
                         <p>Veillez confirmer votre mot de passe</p>
@@ -43,6 +49,7 @@
                     <p><input type="submit" value="S'inscrire"></p>
                 </form>
                 <p>Vous avez déjà un compte ? <a href="index.php" class="inscri">Se connecter</a></p>
+    </div>
     </main>
 </body>
 </html>
