@@ -114,4 +114,21 @@ function get_images_objet($id_objet) {
     return $res;
 }
 
+function get_user_objects() {
+    $user = get_user_byemail($_SESSION["email"]);
+    $idmembre = $user["id_membre"];  
+
+    $sql = "SELECT o.*, c.nom_categorie, i.nom_image
+            FROM emprunt_objet o
+            JOIN emprunt_categorie_objet c ON o.id_categorie = c.id_categorie
+            LEFT JOIN emprunt_image_objet i ON o.id_objet = i.id_objet
+            WHERE o.id_membre = $idmembre
+            ORDER BY o.id_objet DESC";
+
+    $result = mysqli_query(dbconnect(), $sql);
+    $objects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $objects;
+}
+
+
 ?>
