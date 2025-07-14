@@ -59,3 +59,24 @@ INSERT INTO emprunt_objet (nom_objet, id_categorie, id_membre) VALUES ('Trousse 
 INSERT INTO emprunt_objet (nom_objet, id_categorie, id_membre) VALUES ('Scie sauteuse', 2, 1);
 INSERT INTO emprunt_objet (nom_objet, id_categorie, id_membre) VALUES ('Cle dynamometrique', 3, 2);
 
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (1, 'seche_cheveux.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (2, 'perceuse.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (3, 'tournevis.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (4, 'cle_molette.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (5, 'batteur.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (6, 'bouilloire.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (7, 'pinceau.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (8, 'manucure.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (9, 'scie.jpg');
+INSERT INTO emprunt_image_objet (id_objet, nom_image) VALUES (10, 'cle_dynamo.jpg');
+
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (1, 2, '2025-07-01', '2025-07-10');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (2, 3, '2025-07-02', '2025-07-12');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (3, 4, '2025-07-03', '2025-07-13');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (4, 1, '2025-07-04', '2025-07-14');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (5, 2, '2025-07-05', '2025-07-15');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (6, 4, '2025-07-06', '2025-07-16');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (7, 3, '2025-07-07', '2025-07-17');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (8, 1, '2025-07-08', '2025-07-18');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (9, 2, '2025-07-09', '2025-07-19');
+INSERT INTO emprunt_emprunt (id_objet, id_membre, date_emprunt, date_retour) VALUES (10, 4, '2025-07-10', '2025-07-20');
