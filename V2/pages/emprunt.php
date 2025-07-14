@@ -21,7 +21,7 @@ $date = get_emprunt_en_cours($_GET['id'], $_GET['cat']);
     <main>
     <div class="container-sm cont">
     <h3 class="mb-4 text-center">Emprunter un objet</h3>
-    <form action="../traitement/traitement_emprunt.php" method="get">
+    <form action="../traitement/traitement_emprunt.php" method="post">
         <input type="hidden" name="employe" value="<?php echo $employe;?>">
       </p>
       </select>

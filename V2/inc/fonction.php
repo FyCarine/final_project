@@ -3,7 +3,7 @@ function dbconnect() {
     static $connect = null;
 
     if ($connect === null) {
-        $connect = mysqli_connect('localhost', 'root', '', 'emprunt');
+        $connect = mysqli_connect('172.60.0.15', 'ETU002804', 'VPjI8oit', 'db_s2_ETU002804');
         if (!$connect) {
             die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
         }
@@ -190,6 +190,32 @@ function emprunter(){
     $connexion = dbconnect();
     $sql = "SELECT ";
 }
+
+function get_object_emprunt($user){
+    $connexion = dbconnect();
+    $mail = $_SESSION['email'];
+    $moi = get_loged_membre($mail);
+    $user = $moi['id_membre'];
+
+    $sql = "SELECT o.id_objet, o.nom_objet, im.nom_image, e.date_emprunt, e.date_retour
+            FROM emprunt_emprunt e
+            JOIN emprunt_objet o ON e.id_objet = o.id_objet
+            LEFT JOIN emprunt_image_objet im ON im.id_objet = o.id_objet
+            WHERE e.id_membre = '$user'";
+
+    $result = mysqli_query($connexion, $sql);
+
+    if (!$result) {
+        die("Erreur SQL : " . mysqli_error($connexion));
+    }
+
+    $res = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $res[] = $row;
+    }
+    return $res;
+}
+
 
 
 ?>

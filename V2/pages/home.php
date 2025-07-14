@@ -67,6 +67,9 @@ $compteur = 0;
 <p>
     <a class="btn btn-primary" href="addimage.php" role="button">Add new object</a>
 </p>
+<p>
+    <a class="btn btn-primary" href="membre.php" role="button">Mon profil</a>
+</p>
 <?php
 foreach($objets as $objet){
     if ($categorie_actuelle != $objet['nom_categorie']){
