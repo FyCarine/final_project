@@ -3,7 +3,7 @@ function dbconnect() {
     static $connect = null;
 
     if ($connect === null) {
-        $connect = mysqli_connect('localhost', 'root', '', 'exam');
+        $connect = mysqli_connect('localhost', 'root', '', 'emprunt');
         if (!$connect) {
             die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
         }
@@ -81,17 +81,16 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
         return $res;
     }
 
-    function add_pub($titre, $nomimage,$extension, $categorie){
+    function add_pub($nomimage,$extension, $categorie){
         $connexion = dbconnect();
         $mail = $_SESSION['email'];
         $moi = get_loged_membre($mail);
         $IDmembres1 = $moi['IdMembre'];
 
         $sql = " ";
-        $sql = sprintf($sql, $titre, $nomimage, $IDmembres1 ,$extension, $categorie);
+        $sql = sprintf($sql,$IDmembres1,$nomimage,$extension, $categorie);
         echo $sql;
         mysqli_query($connexion, $sql);
-
     }
     function get_categories(){
         $connexion = dbconnect();
@@ -119,10 +118,10 @@ function add_new_member($nom, $dtn, $genre, $email, $ville, $mdp){
     function get_historique_objet($id_objet, $id_categorie) {
     $connexion = dbconnect();
 
-    $sql = "SELECT * FROM v_emprunt_object 
-            WHERE id_objet = '$id_objet'
-            AND id_categorie = '$id_categorie'
-            ORDER BY date_emprunt ASC";
+    $sql = "SELECT * FROM v_emprunt_object v
+            WHERE v.id_objet = '$id_objet'
+            AND v.id_categorie = '$id_categorie'
+            ORDER BY v.date_emprunt ASC";
 
     $result = mysqli_query($connexion, $sql);
     $res = array();
@@ -144,7 +143,7 @@ function get_images_objet($id_objet) {
 }
 
 function get_user_objects() {
-    $user = get_user_byemail($_SESSION["email"]);
+    $user = get_loged_membre($_SESSION["email"]);
     $idmembre = $user["id_membre"];  
 
     $sql = "SELECT o.*, c.nom_categorie, i.nom_image
